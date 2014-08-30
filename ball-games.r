@@ -1,3 +1,5 @@
+# R Code for model in paper: G. Robinson and I. Robinson, Phys Scr. 88(2013) pp 1 - 17
+
 require(deSolve)
 
 # Function for the dynamic model
