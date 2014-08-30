@@ -5,3 +5,6 @@ Here we present R code for the dynamical model described in: The motion of an ar
 by G. Robinson and I. Robinson, Phys Scr. 88(2013) pp 1 - 17
 
 Enjoy!
+
+http://www.active-analytics.com
+Email: chibisi@activeanalytics.co.uk
