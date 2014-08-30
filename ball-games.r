@@ -1,4 +1,5 @@
-# R Code for model in paper: G. Robinson and I. Robinson, Phys Scr. 88(2013) pp 1 - 17
+# R Code for model in paper: The motion of an arbitrary rotating spherical projectile and its application to ball games
+#       G. Robinson and I. Robinson, Phys Scr. 88(2013) pp 1 - 17
 
 require(deSolve)
 
