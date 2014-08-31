@@ -1,6 +1,8 @@
 # R Code for model in paper: The motion of an arbitrary rotating spherical projectile and its application to ball games
 #       G. Robinson and I. Robinson, Phys Scr. 88(2013) pp 1 - 17
 
+# The chart plotted is one of the cases given in figure 11 in the paper
+
 require(deSolve)
 
 # Function for the dynamic model
@@ -11,21 +13,22 @@ ball <- function(t, y, parms)
     v_W = y[c(2, 4, 6)] - W
     nv_W = norm(v_W, "2")
     coeff <- (-.5/m)*rho*A*nv_W
+    
+    # spin/lift is only relevant in w > 0 - prevents NaN from 0/0
+    spin1 <- spin2 <- spin3 <- 0
+    if(w > 0)
+    {
+      spin1 <- coeff*CL*(vw[2]*(y[6] - W[3]) - vw[3]*(y[4] - W[2]))/w
+      spin2 <- CL*(vw[3]*(y[2] - W[1]) - vw[1]*(y[6] - W[3]))/w
+      spin3 <- coeff*CL*(vw[1]*(y[4] - W[2]) - vw[2]*(y[2] - W[1]))/w
+    }
+    
     dy1 <- y[2]
-    spin1 <- coeff*CL*(vw[2]*(y[6] - W[3]) - vw[3]*(y[4] - W[2]))/w
-    if(is.na(spin1)) # prevents NaN
-      spin1 <- 0
     dy2 <- coeff*CD*(y[2] - W[1]) - spin1
     dy3 <- y[4]
-    spin2 <- CL*(vw[3]*(y[2] - W[1]) - vw[1]*(y[6] - W[3]))/w
-    if(is.na(spin2))
-      spin2 <- 0
     dy4 <- coeff*CD*(y[4] - W[2]) - spin2
     dy5 <- y[6]
-    spin3 <- coeff*CL*(vw[1]*(y[4] - W[2]) - vw[2]*(y[2] - W[1]))/w
-    if(is.na(spin3))
-      spin3 <- 0
-    # no more accelation if ball hits the ground
+    # no further accelation due to gravity when ball hits the ground
     if(y[5] <= 0 & t != 0){
       dy6 <- coeff*CD*(y[6] - W[3]) - spin3
     }else{
